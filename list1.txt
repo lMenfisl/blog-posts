@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="main.js"></script>
+    <script defer src="posts.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <ul  id="menu">
+
+    </ul>
+    <div id="list-posts">
+
+
+    </div>
+    <div id="test">
+
+    </div>
+</body>
+</html>
+
+
+main js//////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+'use strict';
+var data = [
+    { name: 'Home', link: '/' },
+    { name: 'About as', link: 'page/about-as' },
+    { name: 'Contacts', link: 'page/contacts' },
+    { name: 'Gallery', link: 'page/gallery' },
+    {
+        name: 'Catalog',
+        link: 'page/catalog',
+        child: [
+            { name: 'Category-1', link: 'category/1' },
+            { name: 'Category-2', link: 'category/2' },
+            { name: 'Category-3', link: 'category/3' }
+        ]
+    },
+    { name: 'Support', link: 'page/support' }
+]
+
+function hover(li) {
+    console.log(li);
+}
+
+
+var ul = document.querySelector('#menu');
+var html = '';
+
+data.forEach(function (item) {
+    var childHtml = '';
+    if (item.child) {
+        childHtml += '<ul>';
+        item.child.forEach(function (item) {
+            childHtml += `<li><a href=${item.link}>${item.name}</a></li>`;
+
+        });
+        childHtml += '</ul>';
+    }
+    var event = item.child ? 'class="drop"': '';
+
+        html += `<li ${event}><a href=${item.link}>${item.name}</a>${childHtml}</li>`;
+
+});
+ul.innerHTML = html;
+console.log(html);
+
+
+
+posts js/////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+
+var url = 'http://blog.api.axenov-it.com/posts';
+
+
+function format(responce) {
+    return responce.json();
+}
+
+function render(data) {
+    var container = document.querySelector('#list-posts');
+
+    data.forEach(function (post) {
+        var template=document.createElement('div');
+        template.className='post';
+
+        var h2 = document.createElement('h2');
+        h2.innerHTML = post.title;
+
+        var likes = document.createElement('i');
+        likes.innerHTML = post.likes;
+        
+
+        var p = document.createElement('p');
+        p.innerHTML = post.description;
+
+        template.append(h2,p,likes);
+        
+        container.appendChild(template);
+    })
+}
+
+
+fetch(url)
+    .then(format)
+    .then(render);
+
+
+
+
+style css ////////////////////////////////////////////////////////
+///////////////////////////////////////////
+
+
+#menu {
+    max-width: 800px;
+    margin: 15px auto;
+    display: flex;
+    flex-wrap: wrap;
+    background: #000000;
+}
+
+#menu li {
+    list-style: none;
+}
+
+#menu li a {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px 15px;
+    display: block;
+}
+
+body,
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+/*menu*/
+.drop {
+    position: relative;
+}
+
+.drop ul {
+    display: none;
+    position: absolute;
+    left: 0;
+    background: #000000ab;
+}
+
+.drop ul li a {
+    text-transform: none !important;
+    white-space: nowrap;
+}
+.drop ul li:hover a {
+text-decoration: underline!important;
+}
+.drop:hover ul {
+    display: block;
+}
+#menu>li > a{
+    border: 2px solid #000;
+    transition: 0.5s;
+}
+#menu>li:hover > a{
+    background: #ffffff;
+    color: #000000;
+}

@@ -1,0 +1,124 @@
+function expres
+function decoration
+
+
+
+// {a:0}
+function Parent() {
+    var a = 0;
+
+    //{} scope: Parent.Lexical
+    function child() {
+        a++;
+        return a;
+    }
+
+
+    return child;
+}
+
+var a = Parent();
+
+console.log(a());
+console.log(a());
+console.log(a());
+
+
+console.log(window);
+// {a:0}
+function Parent() {
+    var a = 5 ;
+
+    //{} scope: Parent.Lexical
+    function child() {
+        a++;
+        return a;
+    }
+
+    console.dir(child);
+    return child;
+}
+
+var a = Parent();
+
+
+
+
+----------------------------------------------------------------
+
+НАследование----------------------------------------------------
+
+
+var privat = {
+
+    send: function () {
+        console.log('Send');
+    },
+
+    by: function(){
+        console.log('privat by')
+    }
+}
+var pumb = {
+
+    send: function () {
+        console.log('Send');
+    },
+
+    by: function(){
+        console.log('pumb by');
+    }
+}
+
+Вариант с наследованием--------------------------------
+var Pay = {
+    send: function () {
+        console.log('Send');
+    },
+}
+var privat = {
+
+    by: function () {
+        console.log('privat by')
+    }
+}
+var pumb = {
+    by: function () {
+        console.log('pumb by');
+    }
+}
+
+pumb.__proto__ = Pay;
+
+pumb.send();
+
+//////////////////////////////////////////////////////////////////////
+
+
+Конструкторы-----------------------------------------------------------------------
+
+function BuildCar(nameCar) {
+    var car = { name: nameCar, doors: 4 }
+
+    return car;
+}
+
+
+var a6 = BuildCar('Audi-6');
+var a8 = BuildCar('Audi-8');
+
+
+--------------------------------
+
+unction BuildCar(nameCar) {
+    this.name = nameCar;
+    this.doors = 4;
+}
+
+
+var a6 = new BuildCar('Audi-6');
+var a8 = new BuildCar('Audi-8');
+
+
+console.log(a8);
+console.log(a6);
