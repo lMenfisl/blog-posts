@@ -122,3 +122,10 @@ var a8 = new BuildCar('Audi-8');
 
 console.log(a8);
 console.log(a6);
+
+
+
+////////////////анонимная функция////////////////
+(function(a = 5 ,b=8){
+    console.log(b+a)
+})(10,15);

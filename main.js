@@ -17,7 +17,6 @@ var data = [
 ]
 
 function hover(li) {
-    console.log(li);
 }
 
 
